@@ -20,7 +20,7 @@ public class MonoFluxTest {
     // Flux publisher
     Flux<String> fluxString = Flux.just("testString1", "testString2")
         .concatWithValues("testStringBeforeException")
-        .concatWith(Flux.error(new RuntimeException("Exception aaya")))
+//        .concatWith(Flux.error(new RuntimeException("Exception aaya")))
         .concatWithValues("testStringAfterException")
         .log();
 
