@@ -6,6 +6,7 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 
 @Service
 @AllArgsConstructor
@@ -17,6 +18,14 @@ public class CustomerService {
   public List<Customer> loadAllCustomers() {
     long startTimeMs = System.currentTimeMillis();
     List<Customer> customers = repository.getCustomers();
+    long endTimeMs = System.currentTimeMillis();
+    log.info("Total time taken to fetch all customers: {}", endTimeMs - startTimeMs);
+    return customers;
+  }
+
+  public Flux<Customer> loadAllCustomersStream() {
+    long startTimeMs = System.currentTimeMillis();
+    Flux<Customer> customers = repository.getCustomerStream();
     long endTimeMs = System.currentTimeMillis();
     log.info("Total time taken to fetch all customers: {}", endTimeMs - startTimeMs);
     return customers;
