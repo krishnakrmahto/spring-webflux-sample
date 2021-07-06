@@ -17,7 +17,7 @@ public class CustomerService {
 
   public List<Customer> loadAllCustomers() {
     long startTimeMs = System.currentTimeMillis();
-    List<Customer> customers = repository.getCustomers();
+    List<Customer> customers = repository.getCustomersWithForcedDelay();
     long endTimeMs = System.currentTimeMillis();
     log.info("Total time taken to fetch all customers: {}", endTimeMs - startTimeMs);
     return customers;
@@ -25,7 +25,7 @@ public class CustomerService {
 
   public Flux<Customer> loadAllCustomersStream() {
     long startTimeMs = System.currentTimeMillis();
-    Flux<Customer> customers = repository.getCustomerStream();
+    Flux<Customer> customers = repository.getCustomerStreamWithForcedDelay();
     long endTimeMs = System.currentTimeMillis();
     log.info("Total time taken to fetch all customers: {}", endTimeMs - startTimeMs);
     return customers;

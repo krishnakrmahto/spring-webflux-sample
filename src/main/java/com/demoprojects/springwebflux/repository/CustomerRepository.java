@@ -13,7 +13,7 @@ import reactor.core.publisher.Flux;
 @Slf4j
 public class CustomerRepository {
 
-  public List<Customer> getCustomers() {
+  public List<Customer> getCustomersWithForcedDelay() {
     return IntStream.rangeClosed(1, 10)
         .peek(i -> log.info("Current customer index: {}", i))
         .peek(i -> sleepThreadForDelay())
@@ -21,12 +21,18 @@ public class CustomerRepository {
         .collect(Collectors.toList());
   }
 
-  public Flux<Customer> getCustomerStream() {
+  public Flux<Customer> getCustomerStreamWithForcedDelay() {
     return Flux.range(1, 10)
         .delayElements(Duration.ofSeconds(1))
         .doOnNext(i -> log.info("Current customer index: {}", i))
         .map(i -> new Customer(i, "customer" + i));
 
+  }
+
+  public Flux<Customer> getCustomerStreamWithoutForcedDelay() {
+    return Flux.range(1, 10)
+        .doOnNext(i -> log.info("Current customer index: {}", i))
+        .map(i -> new Customer(i, "customer" + i));
   }
 
   private void sleepThreadForDelay() {
